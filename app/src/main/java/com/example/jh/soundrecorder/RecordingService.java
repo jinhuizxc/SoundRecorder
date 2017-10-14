@@ -28,7 +28,7 @@ import java.util.TimerTask;
  */
 public class RecordingService extends Service {
 
-    private static final String LOG_TAG = "RecordingService";
+    private static final String TAG = "RecordingService";
 
     private String mFileName = null;
     private String mFilePath = null;
@@ -76,20 +76,40 @@ public class RecordingService extends Service {
         super.onDestroy();
     }
 
+    /**
+     * Log.e(TAG, "  setFileNameAndPath()方法被执行11");
+     * //        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+     * <p>
+     * //        Log.e(TAG, "  setFileNameAndPath()方法被执行3");
+     * //        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+     */
     public void startRecording() {
         setFileNameAndPath();
-
+        Log.e(TAG, "  setFileNameAndPath()方法被执行");
         mRecorder = new MediaRecorder();
+        // 设置录音的声音来源
+        Log.e(TAG, "  setFileNameAndPath()方法被执行1");
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        // 设置录制的声音的输出格式（必须在设置声音编码格式之前设置）
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        mRecorder.setOutputFile(mFilePath);
+        // 设置声音编码的格式
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        Log.e(TAG, "  setFileNameAndPath()方法被执行2");
+        mRecorder.setOutputFile(mFilePath);
         mRecorder.setAudioChannels(1);
+
+        /**
+         *  mRecorder = new MediaRecorder();
+         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+         mRecorder.setOutputFile(mFilePath);
+         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+         mRecorder.setAudioChannels(1);
+         */
         if (MySharedPreferences.getPrefHighQuality(this)) {
             mRecorder.setAudioSamplingRate(44100);
             mRecorder.setAudioEncodingBitRate(192000);
         }
-
         try {
             mRecorder.prepare();
             mRecorder.start();
@@ -99,15 +119,16 @@ public class RecordingService extends Service {
             //startForeground(1, createNotification());
 
         } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
+            Log.e(TAG, "prepare() failed");
         }
+        Log.e(TAG, "  setFileNameAndPath()方法被执行4");
     }
 
-    public void setFileNameAndPath(){
+    public void setFileNameAndPath() {
         int count = 0;
         File f;
 
-        do{
+        do {
             count++;
 
             mFileName = getString(R.string.default_file_name)
@@ -116,7 +137,7 @@ public class RecordingService extends Service {
             mFilePath += "/SoundRecorder/" + mFileName;
 
             f = new File(mFilePath);
-        }while (f.exists() && !f.isDirectory());
+        } while (f.exists() && !f.isDirectory());
     }
 
     public void stopRecording() {
@@ -136,8 +157,8 @@ public class RecordingService extends Service {
         try {
             mDatabase.addRecording(mFileName, mFilePath, mElapsedMillis);
 
-        } catch (Exception e){
-            Log.e(LOG_TAG, "exception", e);
+        } catch (Exception e) {
+            Log.e(TAG, "exception", e);
         }
     }
 

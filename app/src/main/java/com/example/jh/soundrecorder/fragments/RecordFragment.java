@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.io.File;
 public class RecordFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_POSITION = "position";
-    private static final String LOG_TAG = RecordFragment.class.getSimpleName();
+    private static final String TAG = RecordFragment.class.getSimpleName();
 
     private int position;
 
@@ -109,12 +110,13 @@ public class RecordFragment extends Fragment {
     private void onRecord(boolean start){
 
         Intent intent = new Intent(getActivity(), RecordingService.class);
-
+        Log.e(TAG, "intent =" + intent);
         if (start) {
             // start recording
             mRecordButton.setImageResource(R.drawable.ic_media_stop);
             //mPauseButton.setVisibility(View.VISIBLE);
             Toast.makeText(getActivity(),R.string.toast_recording_start,Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "toast =" + R.string.toast_recording_start);
             File folder = new File(Environment.getExternalStorageDirectory() + "/SoundRecorder");
             if (!folder.exists()) {
                 //folder /SoundRecorder doesn't exist, create the folder
