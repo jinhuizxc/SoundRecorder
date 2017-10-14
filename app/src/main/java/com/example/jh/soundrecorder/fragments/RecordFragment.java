@@ -90,8 +90,17 @@ public class RecordFragment extends Fragment {
         mRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onRecord(mStartRecording);
-                mStartRecording = !mStartRecording;
+                // 可能是android 7.0的原因，必须添加权限才能开始录音，解决开始录音的点击问题，不然会有闪退bug
+                if (ActivityCompat.checkSelfPermission(RecordFragment.this.getActivity(), Manifest.permission.RECORD_AUDIO)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(RecordFragment.this.getActivity(), new String[] { Manifest.permission.RECORD_AUDIO },
+                            10);
+                } else {
+                    // 开始录音
+                    onRecord(mStartRecording);
+                    mStartRecording = !mStartRecording;
+                }
+
             }
         });
 
