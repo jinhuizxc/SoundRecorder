@@ -31,6 +31,98 @@ import java.io.File;
  * Use the {@link RecordFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+/**
+ * MediaRecorder类介绍：
+
+ MediaRecorder类是Android sdk提供的一个专门用于音视频录制，一般利用手机麦克风采集音频，摄像头采集图片信息。
+
+ MediaRecorder主要函数：
+
+ setAudioChannels(int numChannels) 设置录制的音频通道数
+
+ setAudioEncoder(int audio_encoder) 设置audio的编码格式
+
+ setAudioEncodingBitRate(int bitRate) 设置录制的音频编码比特率
+
+ setAudioSamplingRate(int samplingRate) 设置录制的音频采样率
+
+ setAudioSource(int audio_source) 设置用于录制的音源
+
+ setAuxiliaryOutputFile(String path) 辅助时间的推移视频文件的路径传递
+
+ setAuxiliaryOutputFile(FileDescriptor fd)在文件描述符传递的辅助时间的推移视频
+
+ setCamera(Camera c) 设置一个recording的摄像头
+
+ setCaptureRate(double fps) 设置视频帧的捕获率
+
+ setMaxDuration(int max_duration_ms) 设置记录会话的最大持续时间（毫秒）
+
+ setMaxFileSize(long max_filesize_bytes) 设置记录会话的最大大小（以字节为单位）
+
+ setOutputFile(FileDescriptor fd) 传递要写入的文件的文件描述符
+
+ setOutputFile(String path) 设置输出文件的路径
+
+ setOutputFormat(int output_format) 设置在录制过程中产生的输出文件的格式
+
+ setPreviewDisplay(Surface sv) 表面设置显示记录媒体（视频）的预览
+
+ setVideoEncoder(int video_encoder) 设置视频编码器，用于录制
+
+ setVideoEncodingBitRate(int bitRate) 设置录制的视频编码比特率
+
+ setVideoFrameRate(int rate) 设置要捕获的视频帧速率
+
+ setVideoSize(int width, int height) 设置要捕获的视频的宽度和高度
+
+ setVideoSource(int video_source) 开始捕捉和编码数据到setOutputFile（指定的文件）
+
+ setLocation(float latitude, float longitude) 设置并存储在输出文件中的地理数据（经度和纬度）
+
+ setProfile(CamcorderProfile profile) 指定CamcorderProfile对象
+
+ setOrientationHint(int degrees)设置输出的视频播放的方向提示
+
+ setOnErrorListener(MediaRecorder.OnErrorListener l)注册一个用于记录录制时出现的错误的监听器
+
+ setOnInfoListener(MediaRecorder.OnInfoListener listener)注册一个用于记录录制时出现的信息事件
+
+ getMaxAmplitude() 获取在前一次调用此方法之后录音中出现的最大振幅
+
+ prepare()准备录制。
+
+ release()释放资源
+
+ reset()将MediaRecorder设为空闲状态
+
+ start()开始录制
+
+ stop()停止录制
+
+ MediaRecorder主要配置参数：
+
+ 1.）视频编码格式MediaRecorder.VideoEncoder
+
+ default，H263，H264，MPEG_4_SP，VP8
+
+ 2.）音频编码格式MediaRecorder.AudioEncoder
+
+ default，AAC，HE_AAC，AAC_ELD，AMR_NB，AMR_WB，VORBIS
+
+ 3.）视频资源获取方式MediaRecorder.VideoSource
+
+ default，CAMERA，SURFACE
+
+ 4.）音频资源获取方式MediaRecorder.AudioSource
+
+ defalut，camcorder，mic，voice_call，voice_communication,voice_downlink,voice_recognition, voice_uplink
+
+ 5.）资源输出格式MediaRecorder.OutputFormat
+
+ amr_nb，amr_wb,default,mpeg_4,raw_amr,three_gpp，aac_adif， aac_adts， output_format_rtp_avp， output_format_mpeg2ts ，webm
+ */
 public class RecordFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_POSITION = "position";
