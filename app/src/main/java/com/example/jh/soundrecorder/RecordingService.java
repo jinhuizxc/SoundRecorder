@@ -1,14 +1,17 @@
 package com.example.jh.soundrecorder;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -84,6 +87,7 @@ public class RecordingService extends Service {
      * //        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
      */
     public void startRecording() {
+
         setFileNameAndPath();
         Log.e(TAG, "  setFileNameAndPath()方法被执行");
         mRecorder = new MediaRecorder();
