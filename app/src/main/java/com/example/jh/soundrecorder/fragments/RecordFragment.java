@@ -93,7 +93,7 @@ public class RecordFragment extends Fragment {
                 // 可能是android 7.0的原因，必须添加权限才能开始录音，解决开始录音的点击问题，不然会有闪退bug
                 if (ActivityCompat.checkSelfPermission(RecordFragment.this.getActivity(), Manifest.permission.RECORD_AUDIO)
                         != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(RecordFragment.this.getActivity(), new String[] { Manifest.permission.RECORD_AUDIO },
+                    ActivityCompat.requestPermissions(RecordFragment.this.getActivity(), new String[]{Manifest.permission.RECORD_AUDIO},
                             10);
                 } else {
                     // 开始录音
@@ -109,6 +109,7 @@ public class RecordFragment extends Fragment {
         mPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 如果正在录音，在暂停
                 onPauseRecord(mPauseRecording);
                 mPauseRecording = !mPauseRecording;
             }
@@ -119,7 +120,7 @@ public class RecordFragment extends Fragment {
 
     // Recording Start/Stop
     //TODO: recording pause
-    private void onRecord(boolean start){
+    private void onRecord(boolean start) {
 
         Intent intent = new Intent(getActivity(), RecordingService.class);
         Log.e(TAG, "intent =" + intent);
@@ -127,7 +128,7 @@ public class RecordFragment extends Fragment {
             // start recording
             mRecordButton.setImageResource(R.drawable.ic_media_stop);
             //mPauseButton.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(),R.string.toast_recording_start,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.toast_recording_start, Toast.LENGTH_SHORT).show();
             Log.e(TAG, "toast =" + R.string.toast_recording_start);
             File folder = new File(Environment.getExternalStorageDirectory() + "/SoundRecorder");
             if (!folder.exists()) {
@@ -182,15 +183,15 @@ public class RecordFragment extends Fragment {
         if (pause) {
             //pause recording
             mPauseButton.setCompoundDrawablesWithIntrinsicBounds
-                    (R.drawable.ic_media_play ,0 ,0 ,0);
-            mRecordingPrompt.setText((String)getString(R.string.resume_recording_button).toUpperCase());
+                    (R.drawable.ic_media_play, 0, 0, 0);
+            mRecordingPrompt.setText((String) getString(R.string.resume_recording_button).toUpperCase());
             timeWhenPaused = mChronometer.getBase() - SystemClock.elapsedRealtime();
             mChronometer.stop();
         } else {
             //resume recording
             mPauseButton.setCompoundDrawablesWithIntrinsicBounds
-                    (R.drawable.ic_media_pause ,0 ,0 ,0);
-            mRecordingPrompt.setText((String)getString(R.string.pause_recording_button).toUpperCase());
+                    (R.drawable.ic_media_pause, 0, 0, 0);
+            mRecordingPrompt.setText((String) getString(R.string.pause_recording_button).toUpperCase());
             mChronometer.setBase(SystemClock.elapsedRealtime() + timeWhenPaused);
             mChronometer.start();
         }

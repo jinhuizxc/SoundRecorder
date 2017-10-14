@@ -80,14 +80,14 @@ public class RecordingService extends Service {
     }
 
     /**
-     * Log.e(TAG, "  setFileNameAndPath()方法被执行11");
-     * //        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-     * <p>
-     * //        Log.e(TAG, "  setFileNameAndPath()方法被执行3");
-     * //        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+     *  mRecorder = new MediaRecorder();
+     mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+     mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+     mRecorder.setOutputFile(mFilePath);
+     mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+     mRecorder.setAudioChannels(1);
      */
     public void startRecording() {
-
         setFileNameAndPath();
         Log.e(TAG, "  setFileNameAndPath()方法被执行");
         mRecorder = new MediaRecorder();
@@ -101,15 +101,6 @@ public class RecordingService extends Service {
         Log.e(TAG, "  setFileNameAndPath()方法被执行2");
         mRecorder.setOutputFile(mFilePath);
         mRecorder.setAudioChannels(1);
-
-        /**
-         *  mRecorder = new MediaRecorder();
-         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-         mRecorder.setOutputFile(mFilePath);
-         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-         mRecorder.setAudioChannels(1);
-         */
         if (MySharedPreferences.getPrefHighQuality(this)) {
             mRecorder.setAudioSamplingRate(44100);
             mRecorder.setAudioEncodingBitRate(192000);
