@@ -1,5 +1,6 @@
 package com.example.jh.soundrecorder.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +28,8 @@ import com.example.jh.soundrecorder.fragments.PlaybackFragment;
 import com.example.jh.soundrecorder.listeners.OnDatabaseChangedListener;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
@@ -38,6 +41,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
     implements OnDatabaseChangedListener {
 
     private static final String LOG_TAG = "FileViewerAdapter";
+    private static final String TAG = FileViewerAdapter.class.getSimpleName();
 
     private DBHelper mDatabase;
 
@@ -56,13 +60,38 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
     @Override
     public void onBindViewHolder(final RecordingsViewHolder holder, int position) {
 
+        /**
+         * // 将毫秒数转换为时间格式
+         * private String progresstime(int progress)
+         * {
+         * Date date = new Date(progress);
+         * SimpleDateFormat format = new SimpleDateFormat("mm:ss");
+         * return format.format(date);
+         * }
+         *
+         */
+        /**
+         * /**
+         * 时间格式转换
+         *
+         * @param time
+         * @return
+         *public String toTime(int time) {
+            time /= 1000;
+            int minute = time / 60;
+            int hour = minute / 60;
+            int second = time % 60;
+            minute %= 60;
+            return String.format("%02d:%02d", minute, second);
+        }
+         */
         item = getItem(position);
-        long itemDuration = item.getLength();
+        long itemDuration = item.getLength();  // 毫秒
+        Log.e(TAG, "itemDuration =" + itemDuration);
 
         long minutes = TimeUnit.MILLISECONDS.toMinutes(itemDuration);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(itemDuration)
                 - TimeUnit.MINUTES.toSeconds(minutes);
-
         holder.vName.setText(item.getName());
         holder.vLength.setText(String.format("%02d:%02d", minutes, seconds));
         holder.vDateAdded.setText(

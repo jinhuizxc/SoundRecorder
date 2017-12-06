@@ -75,17 +75,16 @@ public class RecordingService extends Service {
         if (mRecorder != null) {
             stopRecording();
         }
-
         super.onDestroy();
     }
 
     /**
-     *  mRecorder = new MediaRecorder();
-     mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-     mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-     mRecorder.setOutputFile(mFilePath);
-     mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-     mRecorder.setAudioChannels(1);
+     * mRecorder = new MediaRecorder();
+     * mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+     * mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+     * mRecorder.setOutputFile(mFilePath);
+     * mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+     * mRecorder.setAudioChannels(1);
      */
     public void startRecording() {
         setFileNameAndPath();
@@ -136,7 +135,19 @@ public class RecordingService extends Service {
     }
 
     public void stopRecording() {
-        mRecorder.stop();
+        // 先判断recorder 是否是stop状态再stop，报错就是recorder调用stop的时候出错的
+        try {
+            //下面三个参数必须加，不加的话会奔溃，在mediarecorder.stop();
+            //报错为：RuntimeException:stop failed
+            mRecorder.setOnErrorListener(null);
+            mRecorder.setOnInfoListener(null);
+            mRecorder.setPreviewDisplay(null);
+            mRecorder.stop();
+        } catch (Exception e) {
+            // TODO: handle exception
+            Log.i("Exception", Log.getStackTraceString(e));
+        }
+        //added by ouyang end
         mElapsedMillis = (System.currentTimeMillis() - mStartingTimeMillis);
         mRecorder.release();
         Toast.makeText(this, getString(R.string.toast_recording_finish) + " " + mFilePath, Toast.LENGTH_LONG).show();
