@@ -88,16 +88,13 @@ public class RecordingService extends Service {
      */
     public void startRecording() {
         setFileNameAndPath();
-        Log.e(TAG, "  setFileNameAndPath()方法被执行");
         mRecorder = new MediaRecorder();
         // 设置录音的声音来源
-        Log.e(TAG, "setFileNameAndPath()方法被执行1");
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         // 设置录制的声音的输出格式（必须在设置声音编码格式之前设置）
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         // 设置声音编码的格式
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        Log.e(TAG, "setFileNameAndPath()方法被执行2");
         mRecorder.setOutputFile(mFilePath);
         mRecorder.setAudioChannels(1);
         if (MySharedPreferences.getPrefHighQuality(this)) {
@@ -115,7 +112,6 @@ public class RecordingService extends Service {
         } catch (IOException e) {
             Log.e(TAG, "prepare() failed");
         }
-        Log.e(TAG, "  setFileNameAndPath()方法被执行4");
     }
 
     public void setFileNameAndPath() {
