@@ -190,6 +190,7 @@ public class RecordFragment extends Fragment {
                 } else {
                     // 开始录音
                     onRecord(mStartRecording);
+                    Log.e(TAG, "开始录音1");
                     mStartRecording = !mStartRecording;
                 }
 
